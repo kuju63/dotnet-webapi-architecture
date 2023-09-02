@@ -1,3 +1,7 @@
+using LayeredArchitecture.Repositories;
+
+using Microsoft.EntityFrameworkCore;
+
 using Serilog;
 using Serilog.Events;
 
@@ -17,6 +21,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
+// Configure EntityFramework Core
+builder.Services.AddDbContext<HistoryContext>(options =>
+    options.UseInMemoryDatabase("HistoryContext"));
+
 // Configure Serilog
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
@@ -31,7 +39,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} else {
+}
+else
+{
     app.UseHttpsRedirection();
 }
 
