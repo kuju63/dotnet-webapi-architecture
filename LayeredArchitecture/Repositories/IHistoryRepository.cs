@@ -4,10 +4,10 @@ namespace LayeredArchitecture.Repositories
 {
     public interface IHistoryRepository
     {
-        Task RegisterHistoryAsync(string owner, string repositoryName);
+        Task RegisterHistoryAsync(string title, string description);
 
         Task<History[]> GetHistoriesAsync();
 
-        Task<History[]> GetHistoryPerOwnerAsync(string owner);
+        Task<History[]> GetHistoryPerTitleAsync(string title);
     }
 }

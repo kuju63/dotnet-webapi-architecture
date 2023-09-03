@@ -17,17 +17,17 @@ public class HistoryRepository : IHistoryRepository
 
     public Task<History[]> GetHistoriesAsync() => _context.Histories.ToArrayAsync();
 
-    public Task<History[]> GetHistoryPerOwnerAsync(string owner)
+    public Task<History[]> GetHistoryPerTitleAsync(string title)
     {
-        return _context.Histories.Where(h => h.Owner == owner).ToArrayAsync();
+        return _context.Histories.Where(h => h.Title == title).ToArrayAsync();
     }
 
-    public async Task RegisterHistoryAsync(string owner, string repositoryName)
+    public async Task RegisterHistoryAsync(string title, string description)
     {
         _ = await _context.Histories.AddAsync(new History
         {
-            Owner = owner,
-            RepositoryName = repositoryName,
+            Title = title,
+            Description = description,
             CreatedDateTime = DateTime.UtcNow,
             UpdatedDateTime = DateTime.UtcNow
         });
@@ -35,11 +35,11 @@ public class HistoryRepository : IHistoryRepository
         var result = await _context.SaveChangesAsync();
         if (result == 1)
         {
-            _logger.LogInformation($"History for {owner}/{repositoryName} registered.");
+            _logger.LogInformation($"History for {title}/{description} registered.");
         }
         else
         {
-            _logger.LogError($"History for {owner}/{repositoryName} not registered.");
+            _logger.LogError($"History for {title}/{description} not registered.");
         }
     }
 
