@@ -1,3 +1,5 @@
+using AutoMapper;
+
 using LayeredArchitecture.Repositories;
 using LayeredArchitecture.Services.Models;
 
@@ -7,23 +9,27 @@ public class BookService : IBookService
 {
     private readonly ILogger<BookService> _logger;
     private readonly IHistoryRepository _historyRepository;
+    private readonly IBookApi _bookApi;
+    private readonly IMapper _mapper;
 
-
-    public BookService(ILogger<BookService> logger, IHistoryRepository historyRepository)
+    public BookService(ILogger<BookService> logger, IHistoryRepository historyRepository, IBookApi bookApi, IMapper mapper)
     {
         _logger = logger;
         _historyRepository = historyRepository;
-
+        _bookApi = bookApi;
+        _mapper = mapper;
     }
 
-    public Task<IEnumerable<BookModel>> GetBooksAsync()
+    public async Task<IEnumerable<BookModel>> GetBooksAsync()
     {
-        throw new NotImplementedException();
+        var books = await _bookApi.GetBooksAsync();
+        return _mapper.Map<IEnumerable<BookModel>>(books);
     }
 
-    public Task<IEnumerable<string>> GetBookTagsAsync()
+    public async Task<IEnumerable<string>> GetBookTagsAsync()
     {
-        throw new NotImplementedException();
+        var tags = await _bookApi.GetBookTagsAsync();
+        return tags;
     }
 
 }

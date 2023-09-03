@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 
+using Refit;
+
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
@@ -27,6 +29,10 @@ builder.Services.AddTransient<IHistoryRepository, HistoryRepository>();
 // Configure EntityFramework Core
 builder.Services.AddDbContext<HistoryContext>(options =>
     options.UseInMemoryDatabase("HistoryContext"));
+
+// Configure refit
+builder.Services.AddRefitClient<IBookApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7247"));
 
 // Configure Serilog
 builder.Host.UseSerilog((context, services, configuration) => configuration
