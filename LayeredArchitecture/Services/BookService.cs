@@ -23,6 +23,10 @@ public class BookService : IBookService
     public async Task<IEnumerable<BookModel>> GetBooksAsync()
     {
         var books = await _bookApi.GetBooksAsync();
+        foreach (var book in books)
+        {
+            await _historyRepository.RegisterHistoryAsync(book.Title, book.Description);
+        }
         return _mapper.Map<IEnumerable<BookModel>>(books);
     }
 
