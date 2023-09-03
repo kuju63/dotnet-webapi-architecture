@@ -3,10 +3,10 @@ using LayeredArchitecture.Services;
 
 using Microsoft.EntityFrameworkCore;
 
+using Refit;
+
 using Serilog;
 using Serilog.Events;
-
-using Refit;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
