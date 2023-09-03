@@ -6,7 +6,7 @@ namespace Example.External.API.Controllers;
 [Route("[controller]")]
 public class ExampleController : ControllerBase
 {
-    private static readonly ExampleBook[] ExampleBooks = new []
+    private static readonly ExampleBook[] ExampleBooks = new[]
     {
         new ExampleBook("Example Book 1", "This is an example book.", new [] { "example", "book" }),
         new ExampleBook("Example Book 2", "This is another example book.", new [] { "example", "book" }),
@@ -15,7 +15,7 @@ public class ExampleController : ControllerBase
 
     public ExampleController(ILogger<ExampleController> logger)
     {
-        
+
     }
 
     [HttpGet(Name = "GetExampleBooks")]

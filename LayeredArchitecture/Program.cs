@@ -1,4 +1,5 @@
 using LayeredArchitecture.Repositories;
+using LayeredArchitecture.Services;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddTransient<IBookService, BookService>();
+builder.Services.AddTransient<IHistoryRepository, HistoryRepository>();
 
 // Configure EntityFramework Core
 builder.Services.AddDbContext<HistoryContext>(options =>
